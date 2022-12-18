@@ -27,6 +27,10 @@ def convolve_david(a, b):
     return c
 
 
+def convolve_pro(a, b):
+    return [sum([x * y for x, y in zip(a_transformed, b + (len(a) + len(b) - 1 - len(b)) * [0])]) for a_transformed in [((len(a) + len(b) - 1 - 1 - n) * [0] + a + (n - len(a) + 1) * [0])[:len(a) + len(b) - 1][::-1] for n in range(len(a) + len(b) - 1)]]
+
+
 a = [1, -1]
 b = [2, 0, 0, 1]
 result = convolve(a, b)
