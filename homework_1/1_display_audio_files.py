@@ -1,6 +1,6 @@
 import numpy as np
 import soundfile as sf
-from matplotlib import plt
+from matplotlib import pyplot as plt
 
 figure, axes_list = plt.subplots(ncols=2)
 file_names = ['speech.wav', 'impulse_response.wav']
