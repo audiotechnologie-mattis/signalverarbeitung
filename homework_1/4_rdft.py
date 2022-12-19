@@ -41,10 +41,13 @@ def rdft(x, fs):
     N = len(x)
     length = N // 2 + 1
     n = np.arange(N)
-    f = fs * n[0:length] / N
-    f_transposed = f.reshape((length, 1))
-    matrix = np.exp(-2j * np.pi * f_transposed * n / fs)
+
+    k = n[:length].reshape((length, 1))
+    matrix = np.exp(-2j * np.pi / N * k * n)
     X = np.dot(matrix, x)
+
+    delta_f = fs / N
+    f = n[:length] * delta_f
     return X, f
 
 
@@ -53,12 +56,13 @@ N = [1024, 1025, 1026, 1027, 4096, 8192]
 # result tests
 for n in N:
     x = np.random.rand(n) * 2 - 1
+    fs = n
 
-    X, frequencies = rdft(x, n)
+    X, frequencies = rdft(x, fs)
     expected_result = np.fft.rfft(x)
-    expected_frequencies = np.fft.rfftfreq(n, 1 / n)
-    numpy.testing.assert_equal(frequencies, expected_frequencies)
+    expected_frequencies = np.fft.rfftfreq(n, 1 / fs)
     numpy.testing.assert_allclose(X, expected_result)
+    numpy.testing.assert_equal(frequencies, expected_frequencies)
 
 # time measures
 repetitions = 5
