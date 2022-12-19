@@ -64,6 +64,7 @@ for f, [axis_1, axis_2] in zip(frequencies, axes_list):
     axis_2.plot(convolved_sin)
     axis_2.set_ybound(-1, 1)
 
+figure.subplots_adjust(hspace=0.45)
 figure.show()
 
 
